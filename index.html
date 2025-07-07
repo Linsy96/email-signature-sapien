@@ -125,12 +125,46 @@
     }
 
 <script>
+  const fields = ["imgUrl", "name", "title", "email", "linkedin", "telegram", "twitter"];
+  fields.forEach(id => {
+    document.getElementById(id).addEventListener("input", updatePreview);
+  });
+
+  function updatePreview() {
+    const imgUrl = document.getElementById("imgUrl").value;
+    const name = document.getElementById("name").value;
+    const title = document.getElementById("title").value;
+    const email = document.getElementById("email").value;
+    const linkedin = document.getElementById("linkedin").value;
+    const telegram = document.getElementById("telegram").value;
+    const twitter = document.getElementById("twitter").value;
+
+    document.getElementById("preview-img").src = imgUrl || "";
+    document.getElementById("preview-name").textContent = name;
+    document.getElementById("preview-title").textContent = title;
+    document.getElementById("preview-email").textContent = email;
+
+    setSocial("preview-linkedin", linkedin);
+    setSocial("preview-telegram", telegram);
+    setSocial("preview-twitter", twitter);
+  }
+
+  function setSocial(id, url) {
+    const el = document.getElementById(id);
+    if (url) {
+      el.href = url;
+      el.style.display = "inline";
+    } else {
+      el.style.display = "none";
+    }
+  }
+
   async function copySignaturePreview() {
     const signature = document.getElementById("preview");
     const cloned = signature.cloneNode(true);
     const img = cloned.querySelector("#preview-img");
 
-    // Convert profile image to base64 before copying
+    // Try embedding image as base64
     if (img && img.src && img.src.startsWith("http")) {
       try {
         const response = await fetch(img.src, { mode: "cors" });
@@ -139,13 +173,13 @@
 
         await new Promise(resolve => {
           reader.onloadend = () => {
-            img.src = reader.result; // base64-encoded image
+            img.src = reader.result;
             resolve();
           };
           reader.readAsDataURL(blob);
         });
       } catch (error) {
-        console.warn("Could not embed profile image. Keeping link as fallback.");
+        console.warn("Failed to embed profile image. Leaving as is.");
       }
     }
 
@@ -158,10 +192,11 @@
       ]);
       alert("Signature copied! You can now paste it into Gmail.");
     } catch (err) {
-      console.error("Copy failed:", err);
-      alert("Copy failed. Please copy manually.");
+      console.error("Clipboard API failed. Falling back to manual copy.");
+      alert("Copy failed. Please select the signature and copy it manually.");
     }
   }
 </script>
+
 </body>
 </html>
