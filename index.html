@@ -25,7 +25,11 @@
       gap: 1rem;
       align-items: center;
     }
-    .signature img {
+    .logo {
+      max-height: 45px;
+      width: auto;
+    }
+    .profile-img {
       max-height: 80px;
       width: auto;
     }
@@ -63,7 +67,8 @@
 
   <h2>Signature Preview</h2>
   <div class="signature" id="preview">
-    <img id="preview-img" src="" alt="Logo" />
+    <img class="logo" src="/mnt/data/sapien-logo-black-whitebcgr.jpg" alt="Sapien Logo" />
+    <img id="preview-img" class="profile-img" src="" alt="Profile" />
     <div class="signature-text">
       <strong id="preview-name"></strong>
       <span id="preview-title"></span>
