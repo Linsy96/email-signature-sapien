@@ -69,8 +69,68 @@
   </div>
 
   <h2>Signature Preview</h2>
-  <table class="signature-table" id="preview">
-    <tr>
-      <td>
-        <a href="https://sapien.ai" target="_blank">
-          <img class="logo" s
+
+  <div id="preview">
+    <table class="signature-table">
+      <tr>
+        <td>
+          <a href="https://sapien.ai" target="_blank">
+            <img class="logo" src="https://github.com/Linsy96/email-signature-sapien/blob/main/sapien-logo-black-whitebcgr.jpg?raw=true" alt="Sapien Logo" />
+          </a>
+        </td>
+        <td>
+          <img id="preview-img" class="profile-img" src="" alt="Profile" />
+        </td>
+        <td>
+          <div class="signature-text">
+            <strong id="preview-name"></strong>
+            <span id="preview-title"></span>
+            <span id="preview-email"></span>
+            <div class="socials">
+              <a id="preview-linkedin" href="#" style="display:none">LinkedIn</a>
+              <a id="preview-telegram" href="#" style="display:none">Telegram</a>
+              <a id="preview-twitter" href="#" style="display:none">X</a>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    const fields = ["imgUrl", "name", "title", "email", "linkedin", "telegram", "twitter"];
+    fields.forEach(id => {
+      document.getElementById(id).addEventListener("input", updatePreview);
+    });
+
+    function updatePreview() {
+      const imgUrl = document.getElementById("imgUrl").value;
+      const name = document.getElementById("name").value;
+      const title = document.getElementById("title").value;
+      const email = document.getElementById("email").value;
+      const linkedin = document.getElementById("linkedin").value;
+      const telegram = document.getElementById("telegram").value;
+      const twitter = document.getElementById("twitter").value;
+
+      document.getElementById("preview-img").src = imgUrl || "";
+      document.getElementById("preview-name").textContent = name;
+      document.getElementById("preview-title").textContent = title;
+      document.getElementById("preview-email").textContent = email;
+
+      setSocial("preview-linkedin", linkedin);
+      setSocial("preview-telegram", telegram);
+      setSocial("preview-twitter", twitter);
+    }
+
+    function setSocial(id, url) {
+      const el = document.getElementById(id);
+      if (url) {
+        el.href = url;
+        el.style.display = "inline";
+      } else {
+        el.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
