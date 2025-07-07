@@ -114,14 +114,30 @@
       generateOutput();
     }
 
-    function setSocial(id, url) {
-      const el = document.getElementById(id);
-      if (url) {
-        el.href = url;
-        el.style.display = "inline";
-      } else {
-        el.style.display = "none";
-      }
+    <script>
+  async function copySignaturePreview() {
+    const signature = document.getElementById("preview");
+
+    try {
+      // Get the HTML content of the signature preview
+      const html = signature.outerHTML;
+
+      // Use the modern Clipboard API
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "text/html": new Blob([html], { type: "text/html" }),
+          "text/plain": new Blob([signature.textContent], { type: "text/plain" }),
+        }),
+      ]);
+
+      alert("Signature copied! You can now paste it into Gmail.");
+    } catch (err) {
+      console.error("Copy failed:", err);
+      alert("Copy failed. Try selecting and copying the preview manually.");
+    }
+  }
+</script>
+
     }
 
     function generateOutput() {
