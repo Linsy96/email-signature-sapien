@@ -26,7 +26,7 @@
     }
 
     .signature-table td {
-      vertical-align: middle;
+      vertical-align: top;
       padding-right: 15px;
     }
 
@@ -38,20 +38,6 @@
     .profile-img {
       max-height: 80px;
       width: auto;
-    }
-
-    .signature-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-      font-size: 14px;
-    }
-
-    .socials a {
-      margin-right: 8px;
-      text-decoration: none;
-      color: #0366d6;
-      font-size: 13px;
     }
   </style>
 </head>
@@ -71,7 +57,7 @@
   <h2>Signature Preview</h2>
 
   <div id="preview">
-    <table class="signature-table">
+    <table class="signature-table" cellpadding="0" cellspacing="0" border="0">
       <tr>
         <td>
           <a href="https://sapien.ai" target="_blank">
@@ -79,19 +65,29 @@
           </a>
         </td>
         <td>
-          <img id="preview-img" class="profile-img" src="" alt="Profile" />
+          <img id="preview-img" class="profile-img" src="" alt="Profile Image" />
         </td>
         <td>
-          <div class="signature-text">
-            <strong id="preview-name"></strong>
-            <span id="preview-title"></span>
-            <span id="preview-email"></span>
-            <div class="socials">
-              <a id="preview-linkedin" href="#" style="display:none">LinkedIn</a>
-              <a id="preview-telegram" href="#" style="display:none">Telegram</a>
-              <a id="preview-twitter" href="#" style="display:none">X</a>
-            </div>
-          </div>
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="font-weight: bold; font-size: 14px;" id="preview-name"></td>
+            </tr>
+            <tr>
+              <td style="font-size: 13px; color: #555;" id="preview-title"></td>
+            </tr>
+            <tr>
+              <td style="font-size: 13px;" id="preview-email"></td>
+            </tr>
+            <tr>
+              <td style="padding-top: 6px;">
+                <span style="font-size: 13px;">
+                  <a id="preview-linkedin" href="#" style="display:none; margin-right: 10px; text-decoration:none; color:#0366d6;">LinkedIn</a>
+                  <a id="preview-telegram" href="#" style="display:none; margin-right: 10px; text-decoration:none; color:#0366d6;">Telegram</a>
+                  <a id="preview-twitter" href="#" style="display:none; text-decoration:none; color:#0366d6;">X</a>
+                </span>
+              </td>
+            </tr>
+          </table>
         </td>
       </tr>
     </table>
