@@ -12,43 +12,58 @@
       flex-direction: column;
       gap: 2rem;
     }
+
     .form-group {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
       max-width: 400px;
     }
+
     .signature {
       border-top: 1px solid #ccc;
       padding-top: 1rem;
-      display: flex;
-      gap: 1rem;
-      align-items: center;
+      display: table;
     }
+
+    .signature-row {
+      display: table-row;
+    }
+
+    .signature-cell {
+      display: table-cell;
+      vertical-align: middle;
+      padding-right: 15px;
+    }
+
     .logo {
       max-height: 30px;
       width: auto;
-      margin-right: 12px;
     }
+
     .profile-img {
       max-height: 80px;
       width: auto;
-      margin-right: 12px;
     }
+
     .signature-text {
       display: flex;
       flex-direction: column;
       gap: 0.2rem;
+      font-size: 14px;
     }
+
     .socials a {
       margin-right: 8px;
       text-decoration: none;
       color: #0366d6;
+      font-size: 13px;
     }
   </style>
 </head>
 <body>
   <h1>Email Signature Builder</h1>
+
   <div class="form-group">
     <label>Image URL <input id="imgUrl" type="text" /></label>
     <label>Name <input id="name" type="text" /></label>
@@ -61,18 +76,26 @@
 
   <h2>Signature Preview</h2>
   <div class="signature" id="preview">
-    <a href="https://sapien.ai" target="_blank">
-      <img class="logo" src="https://github.com/Linsy96/email-signature-sapien/blob/main/sapien-logo-black-whitebcgr.jpg?raw=true" alt="Sapien Logo" />
-    </a>
-    <img id="preview-img" class="profile-img" src="" alt="Profile" />
-    <div class="signature-text">
-      <strong id="preview-name"></strong>
-      <span id="preview-title"></span>
-      <span id="preview-email"></span>
-      <div class="socials">
-        <a id="preview-linkedin" href="#" style="display:none">LinkedIn</a>
-        <a id="preview-telegram" href="#" style="display:none">Telegram</a>
-        <a id="preview-twitter" href="#" style="display:none">X</a>
+    <div class="signature-row">
+      <div class="signature-cell">
+        <a href="https://sapien.ai" target="_blank">
+          <img class="logo" src="https://github.com/Linsy96/email-signature-sapien/blob/main/sapien-logo-black-whitebcgr.jpg?raw=true" alt="Sapien Logo" />
+        </a>
+      </div>
+      <div class="signature-cell">
+        <img id="preview-img" class="profile-img" src="" alt="Profile" />
+      </div>
+      <div class="signature-cell">
+        <div class="signature-text">
+          <strong id="preview-name"></strong>
+          <span id="preview-title"></span>
+          <span id="preview-email"></span>
+          <div class="socials">
+            <a id="preview-linkedin" href="#" style="display:none">LinkedIn</a>
+            <a id="preview-telegram" href="#" style="display:none">Telegram</a>
+            <a id="preview-twitter" href="#" style="display:none">X</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
