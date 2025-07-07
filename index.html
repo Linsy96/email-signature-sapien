@@ -26,7 +26,7 @@
       align-items: center;
     }
     .logo {
-      max-height: 30px;
+      max-height: 45px;
       width: auto;
       margin-right: 12px;
     }
@@ -44,10 +44,6 @@
       margin-right: 8px;
       text-decoration: none;
       color: #0366d6;
-    }
-    textarea {
-      width: 100%;
-      height: 200px;
     }
   </style>
 </head>
@@ -81,10 +77,8 @@
     </div>
   </div>
 
-
   <script>
     const fields = ["imgUrl", "name", "title", "email", "linkedin", "telegram", "twitter"];
-
     fields.forEach(id => {
       document.getElementById(id).addEventListener("input", updatePreview);
     });
@@ -117,57 +111,6 @@
         el.style.display = "none";
       }
     }
-
-<script>
-  const fields = ["imgUrl", "name", "title", "email", "linkedin", "telegram", "twitter"];
-  fields.forEach(id => {
-    document.getElementById(id).addEventListener("input", updatePreview);
-  });
-
-  function updatePreview() {
-    const imgUrl = document.getElementById("imgUrl").value;
-    const name = document.getElementById("name").value;
-    const title = document.getElementById("title").value;
-    const email = document.getElementById("email").value;
-    const linkedin = document.getElementById("linkedin").value;
-    const telegram = document.getElementById("telegram").value;
-    const twitter = document.getElementById("twitter").value;
-
-    document.getElementById("preview-img").src = imgUrl || "";
-    document.getElementById("preview-name").textContent = name;
-    document.getElementById("preview-title").textContent = title;
-    document.getElementById("preview-email").textContent = email;
-
-    setSocial("preview-linkedin", linkedin);
-    setSocial("preview-telegram", telegram);
-    setSocial("preview-twitter", twitter);
-  }
-
-  function setSocial(id, url) {
-    const el = document.getElementById(id);
-    if (url) {
-      el.href = url;
-      el.style.display = "inline";
-    } else {
-      el.style.display = "none";
-    }
-  }
-
-
-    try {
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          "text/html": new Blob([cloned.outerHTML], { type: "text/html" }),
-          "text/plain": new Blob([cloned.textContent], { type: "text/plain" }),
-        }),
-      ]);
-      alert("Signature copied! You can now paste it into Gmail.");
-    } catch (err) {
-      console.error("Clipboard API failed. Falling back to manual copy.");
-      alert("Copy failed. Please select the signature and copy it manually.");
-    }
-  }
-</script>
-
+  </script>
 </body>
 </html>
