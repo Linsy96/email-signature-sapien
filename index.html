@@ -138,30 +138,34 @@
   }
 </script>
 
+<script>
+  async function copySignaturePreview() {
+    const signature = document.getElementById("preview");
+
+    // Clone it to safely manipulate
+    const cloned = signature.cloneNode(true);
+
+    // Make sure image URLs are embedded fully
+    const img = cloned.querySelector("#preview-img");
+    if (img && img.src) {
+      const resolvedSrc = img.src; // full image URL
+      img.setAttribute("src", resolvedSrc);
     }
 
-    function generateOutput() {
-      const html = document.getElementById("preview").outerHTML;
-      document.getElementById("output").value = html;
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "text/html": new Blob([cloned.outerHTML], { type: "text/html" }),
+          "text/plain": new Blob([cloned.textContent], { type: "text/plain" }),
+        }),
+      ]);
+      alert("Signature copied! You can now paste it into Gmail.");
+    } catch (err) {
+      console.error("Copy failed:", err);
+      alert("Copy failed. Try selecting and copying the preview manually.");
     }
-
-    function copySignaturePreview() {
-  const signature = document.getElementById("preview");
-  const range = document.createRange();
-  range.selectNode(signature);
-  const selection = window.getSelection();
-  selection.removeAllRanges();
-  selection.addRange(range);
-
-  try {
-    const successful = document.execCommand("copy");
-    alert(successful ? "Signature copied!" : "Copy failed.");
-  } catch (err) {
-    alert("Your browser does not support copying. Please copy manually.");
   }
-
-  selection.removeAllRanges();
-}
+</script>
 
   </script>
 </body>
