@@ -28,10 +28,12 @@
     .logo {
       max-height: 30px;
       width: auto;
+      margin-right: 12px;
     }
     .profile-img {
       max-height: 80px;
       width: auto;
+      margin-right: 12px;
     }
     .signature-text {
       display: flex;
@@ -41,6 +43,7 @@
     .socials a {
       margin-right: 8px;
       text-decoration: none;
+      color: #0366d6;
     }
     textarea {
       width: 100%;
@@ -67,9 +70,9 @@
 
   <h2>Signature Preview</h2>
   <div class="signature" id="preview">
-    <a href="https://sapien.io" target="_blank">
-  <img class="logo" src="https://github.com/Linsy96/email-signature-sapien/blob/main/sapien-logo-black-whitebcgr.jpg?raw=true" alt="Sapien Logo" />
-</a>
+    <a href="https://sapien.ai" target="_blank">
+      <img class="logo" src="https://github.com/Linsy96/email-signature-sapien/blob/main/sapien-logo-black-whitebcgr.jpg?raw=true" alt="Sapien Logo" />
+    </a>
     <img id="preview-img" class="profile-img" src="" alt="Profile" />
     <div class="signature-text">
       <strong id="preview-name"></strong>
@@ -83,8 +86,7 @@
     </div>
   </div>
 
-  <button onclick="copyHTML()">Copy Signature</button>
-  <textarea id="output" readonly></textarea>
+  <button onclick="copySignaturePreview()">Copy Signature</button>
 
   <script>
     const fields = ["imgUrl", "name", "title", "email", "linkedin", "telegram", "twitter"];
@@ -110,63 +112,41 @@
       setSocial("preview-linkedin", linkedin);
       setSocial("preview-telegram", telegram);
       setSocial("preview-twitter", twitter);
-
-      generateOutput();
     }
 
-    <script>
-  async function copySignaturePreview() {
-    const signature = document.getElementById("preview");
-
-    try {
-      // Get the HTML content of the signature preview
-      const html = signature.outerHTML;
-
-      // Use the modern Clipboard API
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          "text/html": new Blob([html], { type: "text/html" }),
-          "text/plain": new Blob([signature.textContent], { type: "text/plain" }),
-        }),
-      ]);
-
-      alert("Signature copied! You can now paste it into Gmail.");
-    } catch (err) {
-      console.error("Copy failed:", err);
-      alert("Copy failed. Try selecting and copying the preview manually.");
-    }
-  }
-</script>
-
-<script>
-  async function copySignaturePreview() {
-    const signature = document.getElementById("preview");
-
-    // Clone it to safely manipulate
-    const cloned = signature.cloneNode(true);
-
-    // Make sure image URLs are embedded fully
-    const img = cloned.querySelector("#preview-img");
-    if (img && img.src) {
-      const resolvedSrc = img.src; // full image URL
-      img.setAttribute("src", resolvedSrc);
+    function setSocial(id, url) {
+      const el = document.getElementById(id);
+      if (url) {
+        el.href = url;
+        el.style.display = "inline";
+      } else {
+        el.style.display = "none";
+      }
     }
 
-    try {
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          "text/html": new Blob([cloned.outerHTML], { type: "text/html" }),
-          "text/plain": new Blob([cloned.textContent], { type: "text/plain" }),
-        }),
-      ]);
-      alert("Signature copied! You can now paste it into Gmail.");
-    } catch (err) {
-      console.error("Copy failed:", err);
-      alert("Copy failed. Try selecting and copying the preview manually.");
-    }
-  }
-</script>
+    async function copySignaturePreview() {
+      const signature = document.getElementById("preview");
 
+      // Clone it to manipulate safely
+      const cloned = signature.cloneNode(true);
+      const img = cloned.querySelector("#preview-img");
+      if (img && img.src) {
+        img.setAttribute("src", img.src); // Resolve to absolute URL
+      }
+
+      try {
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            "text/html": new Blob([cloned.outerHTML], { type: "text/html" }),
+            "text/plain": new Blob([cloned.textContent], { type: "text/plain" }),
+          }),
+        ]);
+        alert("Signature copied! You can now paste it into Gmail.");
+      } catch (err) {
+        console.error("Copy failed:", err);
+        alert("Copy failed. Please copy manually.");
+      }
+    }
   </script>
 </body>
 </html>
