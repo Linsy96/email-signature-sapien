@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Signature Builder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-width: 400px;
+    }
+    .signature {
+      border-top: 1px solid #ccc;
+      padding-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .signature img {
+      max-height: 80px;
+      width: auto;
+    }
+    .signature-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .socials a {
+      margin-right: 8px;
+      text-decoration: none;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Email Signature Builder</h1>
+  <div class="form-group">
+    <label>Image URL <input id="imgUrl" type="text" /></label>
+    <label>Name <input id="name" type="text" /></label>
+    <label>Job Title <input id="title" type="text" /></label>
+    <label>Email <input id="email" type="email" /></label>
+    <label>LinkedIn URL <input id="linkedin" type="url" /></label>
+    <label>Telegram URL <input id="telegram" type="url" /></label>
+    <label>X (Twitter) URL <input id="twitter" type="url" /></label>
+  </div>
+
+  <h2>Signature Preview</h2>
+  <div class="signature" id="preview">
+    <img id="preview-img" src="" alt="Logo" />
+    <div class="signature-text">
+      <strong id="preview-name"></strong>
+      <span id="preview-title"></span>
+      <span id="preview-email"></span>
+      <div class="socials">
+        <a id="preview-linkedin" href="#" style="display:none">LinkedIn</a>
+        <a id="preview-telegram" href="#" style="display:none">Telegram</a>
+        <a id="preview-twitter" href="#" style="display:none">X</a>
+      </div>
+    </div>
+  </div>
+
+  <button onclick="copyHTML()">Copy Signature HTML</button>
+  <textarea id="output" readonly></textarea>
+
+  <script>
+    const fields = ["imgUrl", "name", "title", "email", "linkedin", "telegram", "twitter"];
+
+    fields.forEach(id => {
+      document.getElementById(id).addEventListener("input", updatePreview);
+    });
+
+    function updatePreview() {
+      const imgUrl = document.getElementById("imgUrl").value;
+      const name = document.getElementById("name").value;
+      const title = document.getElementById("title").value;
+      const email = document.getElementById("email").value;
+      const linkedin = document.getElementById("linkedin").value;
+      const telegram = document.getElementById("telegram").value;
+      const twitter = document.getElementById("twitter").value;
+
+      document.getElementById("preview-img").src = imgUrl || "";
+      document.getElementById("preview-name").textContent = name;
+      document.getElementById("preview-title").textContent = title;
+      document.getElementById("preview-email").textContent = email;
+
+      setSocial("preview-linkedin", linkedin);
+      setSocial("preview-telegram", telegram);
+      setSocial("preview-twitter", twitter);
+
+      generateOutput();
+    }
+
+    function setSocial(id, url) {
+      const el = document.getElementById(id);
+      if (url) {
+        el.href = url;
+        el.style.display = "inline";
+      } else {
+        el.style.display = "none";
+      }
+    }
+
+    function generateOutput() {
+      const html = document.getElementById("preview").outerHTML;
+      document.getElementById("output").value = html;
+    }
+
+    function copyHTML() {
+      const output = document.getElementById("output");
+      output.select();
+      document.execCommand("copy");
+      alert("Signature HTML copied!");
+    }
+  </script>
+</body>
+</html>
