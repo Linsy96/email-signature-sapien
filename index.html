@@ -124,29 +124,44 @@
       }
     }
 
-    async function copySignaturePreview() {
-      const signature = document.getElementById("preview");
+<script>
+  async function copySignaturePreview() {
+    const signature = document.getElementById("preview");
+    const cloned = signature.cloneNode(true);
+    const img = cloned.querySelector("#preview-img");
 
-      // Clone it to manipulate safely
-      const cloned = signature.cloneNode(true);
-      const img = cloned.querySelector("#preview-img");
-      if (img && img.src) {
-        img.setAttribute("src", img.src); // Resolve to absolute URL
-      }
-
+    // Convert profile image to base64 before copying
+    if (img && img.src && img.src.startsWith("http")) {
       try {
-        await navigator.clipboard.write([
-          new ClipboardItem({
-            "text/html": new Blob([cloned.outerHTML], { type: "text/html" }),
-            "text/plain": new Blob([cloned.textContent], { type: "text/plain" }),
-          }),
-        ]);
-        alert("Signature copied! You can now paste it into Gmail.");
-      } catch (err) {
-        console.error("Copy failed:", err);
-        alert("Copy failed. Please copy manually.");
+        const response = await fetch(img.src, { mode: "cors" });
+        const blob = await response.blob();
+        const reader = new FileReader();
+
+        await new Promise(resolve => {
+          reader.onloadend = () => {
+            img.src = reader.result; // base64-encoded image
+            resolve();
+          };
+          reader.readAsDataURL(blob);
+        });
+      } catch (error) {
+        console.warn("Could not embed profile image. Keeping link as fallback.");
       }
     }
-  </script>
+
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "text/html": new Blob([cloned.outerHTML], { type: "text/html" }),
+          "text/plain": new Blob([cloned.textContent], { type: "text/plain" }),
+        }),
+      ]);
+      alert("Signature copied! You can now paste it into Gmail.");
+    } catch (err) {
+      console.error("Copy failed:", err);
+      alert("Copy failed. Please copy manually.");
+    }
+  }
+</script>
 </body>
 </html>
