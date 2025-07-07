@@ -49,11 +49,6 @@
       width: 100%;
       height: 200px;
     }
-    button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
@@ -86,7 +81,6 @@
     </div>
   </div>
 
-  <button onclick="copySignaturePreview()">Copy Signature</button>
 
   <script>
     const fields = ["imgUrl", "name", "title", "email", "linkedin", "telegram", "twitter"];
@@ -159,29 +153,6 @@
     }
   }
 
-  async function copySignaturePreview() {
-    const signature = document.getElementById("preview");
-    const cloned = signature.cloneNode(true);
-    const img = cloned.querySelector("#preview-img");
-
-    // Try embedding image as base64
-    if (img && img.src && img.src.startsWith("http")) {
-      try {
-        const response = await fetch(img.src, { mode: "cors" });
-        const blob = await response.blob();
-        const reader = new FileReader();
-
-        await new Promise(resolve => {
-          reader.onloadend = () => {
-            img.src = reader.result;
-            resolve();
-          };
-          reader.readAsDataURL(blob);
-        });
-      } catch (error) {
-        console.warn("Failed to embed profile image. Leaving as is.");
-      }
-    }
 
     try {
       await navigator.clipboard.write([
