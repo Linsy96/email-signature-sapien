@@ -83,7 +83,7 @@
     </div>
   </div>
 
-  <button onclick="copyHTML()">Copy Signature HTML</button>
+  <button onclick="copyHTML()">Copy Signature</button>
   <textarea id="output" readonly></textarea>
 
   <script>
@@ -129,12 +129,24 @@
       document.getElementById("output").value = html;
     }
 
-    function copyHTML() {
-      const output = document.getElementById("output");
-      output.select();
-      document.execCommand("copy");
-      alert("Signature HTML copied!");
-    }
+    function copySignaturePreview() {
+  const signature = document.getElementById("preview");
+  const range = document.createRange();
+  range.selectNode(signature);
+  const selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+
+  try {
+    const successful = document.execCommand("copy");
+    alert(successful ? "Signature copied!" : "Copy failed.");
+  } catch (err) {
+    alert("Your browser does not support copying. Please copy manually.");
+  }
+
+  selection.removeAllRanges();
+}
+
   </script>
 </body>
 </html>
